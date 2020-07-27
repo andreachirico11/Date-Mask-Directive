@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row">
+    <form>
+      <input
+        [formControl]="formControl"
+        type="text"
+        dateMask
+        [maskOptions]="maskConfigOptions"
+      />
+    </form>
+  </div>
+  <div class="row">
+    <div class="button-group">
+      <button (click)="changeMaskOpt(dateInputEnum.DATE)">Date</button>
+      <button (click)="changeMaskOpt(dateInputEnum.DATE_TIME)">Date-Time</button>
+      <button (click)="changeMaskOpt(dateInputEnum.TIME)">Time</button>
+    </div>
+    <button>Toggle Seconds</button>
+  </div>
+</div>

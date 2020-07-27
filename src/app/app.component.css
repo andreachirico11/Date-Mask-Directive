@@ -1,0 +1,25 @@
+.container {
+    display: grid;
+    padding-top: 5%;
+    justify-content: center;
+}
+
+input {
+    font-size: x-large;
+    text-align: center;
+}
+
+.row {
+    padding: 20% 0;
+}
+
+
+button {
+    background-color: rgb(255, 255, 255);
+    font-family: Arial, Helvetica, sans-serif;
+    border: none;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 36px;
+}
