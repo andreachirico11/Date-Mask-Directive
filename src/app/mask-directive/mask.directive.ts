@@ -478,7 +478,7 @@ export class MaskDirective implements OnInit {
         setter(stringNewNumber);
         if (!this.monthOrDayValidator()) {
             setter(previousNum);
-            this.handleCursor(this.getNextOrPrevDatatype(actualPosition));
+            this.handleCursor(actualPosition);
             return;
         }
         if (stringNewNumber === max.toString()) {

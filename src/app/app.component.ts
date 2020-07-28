@@ -1,66 +1,65 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
 import { MaskConfigOptions, Separators } from "./mask-directive/mask-options";
-import { FormControl } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   maskConfigOptions: MaskConfigOptions;
   formControl: FormControl;
-  value = '2019-10-10T00:59:00';
-  get dateInputEnum() {
-    return DateInputEnum;
-  }
+  startSituation = true;
+  public dateModel: string;
+  public timeModel: string;
+  public dateSeparator: string = null;
+  public timeSeparator: string = null;
+  public dateTimeSeparator: string = null;
+  public separators: string[] = [];
+  value = '2019-10-11T23:59:05';
+  public dateSelect: string[] = []; 
+  public timeSelect: string[] = [];
+  
+  @ViewChild('configForm') configForm: NgForm;
 
 
-  ngOnInit() {
+  ngOnInit() {    
+    this.separators = [ ... (Object.keys(Separators).map(key => Separators[key])) ];
     this.formControl = new FormControl(this.value);
-    this.changeMaskOpt(this.dateInputEnum.DATE);
+    // this.changeMaskOpt(this.dateInputEnum.DATE);
   }
 
-  changeMaskOpt(typeOFInput: DateInputEnum) {
-    switch (typeOFInput) {
-      case DateInputEnum.DATE:
-        // this.maskConfigOptions = {};
-        this.maskConfigOptions = {
-          dateConfiguration: "yyMMdd",
-          dateSeparator: Separators.space,
-        };
-        break;
-      case DateInputEnum.DATE_TIME:
-        // this.maskConfigOptions = {};
-        this.maskConfigOptions = {
-          dateConfiguration: "yyMMdd",
-          timeConfiguration: "hhmmss",
-          dateSeparator: Separators.dot,
-          timeSeparator: Separators.dot,
-          dateTimeSeparator: Separators.dot,
-          minYear: 1900,
-          maxYear: 2500,
-        };
-        break;
-      case DateInputEnum.TIME:
-        // this.maskConfigOptions = {};
-        this.maskConfigOptions = {
-          timeConfiguration: "sshhmm",
-          timeSeparator: Separators.dot,
-        };
-        break;
-      default:
-        break;
-    }
-    this.ngOnInit()
+  ngAfterViewInit() {
+
   }
+  
+  format() {
+    if(this.startSituation === true) {
+      this.startSituation = false;
+    }
+    let date = this.dateSelect.join("");
+    if(/i/g.test(date)) {
+      date = null;
+      console.log(date);
+      
+    }
+    let time = this.timeSelect.join("");
+    this.maskConfigOptions = {
+      dateConfiguration: date ? date : null,
+      timeConfiguration: time ? time : null,
+      dateSeparator: this.dateSeparator ? Separators[this.dateSeparator] : null,
+      timeSeparator: this.timeSeparator ? Separators[this.timeSeparator] : null,
+      dateTimeSeparator: this.dateTimeSeparator ? Separators[this.dateTimeSeparator] : null
+    }
+  }
+
+
+
+  // cercare i casi nulli in date e in time e fare prove
+  
   
 }
 
 
 
-enum DateInputEnum {
-  DATE_TIME = "DATE_TIME",
-  DATE = "DATE",
-  TIME = "TIME",
-}

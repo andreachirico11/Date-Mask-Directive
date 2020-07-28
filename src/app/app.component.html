@@ -1,20 +1,84 @@
 <div class="container">
   <div class="row">
-    <form>
+    <form #configForm="ngForm">
       <input
-        [formControl]="formControl"
+        *ngIf="startSituation; else maskedInput"
         type="text"
-        dateMask
-        [maskOptions]="maskConfigOptions"
+        [formControl]="formControl"
+        id="mainInput"
+        type="text"
       />
+      <ng-template #maskedInput>
+        <input
+          id="mainInput"
+          [formControl]="formControl"
+          type="text"
+          dateMask
+          [maskOptions]="maskConfigOptions"
+        />
+      </ng-template>
     </form>
   </div>
-  <div class="row">
-    <div class="button-group">
-      <button (click)="changeMaskOpt(dateInputEnum.DATE)">Date</button>
-      <button (click)="changeMaskOpt(dateInputEnum.DATE_TIME)">Date-Time</button>
-      <button (click)="changeMaskOpt(dateInputEnum.TIME)">Time</button>
-    </div>
-    <button>Toggle Seconds</button>
+  <div class="row" id="controls">
+    <form action="">
+      <div class="up_down_margin">
+        <p>Date Format</p>
+        <select
+          *ngFor="let i of [0, 1, 2]"
+          [(ngModel)]="dateSelect[i]"
+          required
+          [name]="'dateSelect' + i"
+        >
+          <option value="dd">Day</option>
+          <option value="MM">Month</option>
+          <option value="yy">Year</option>
+          <option value="xx">Empty</option>
+        </select>
+      </div>
+      <div class="up_down_margin">
+        <p>Time Format</p>
+        <select
+          *ngFor="let i of [1, 2, 3]"
+          [(ngModel)]="timeSelect[i]"
+          required
+          [name]="'timeSelect' + i"
+        >
+          <option value="hh">Hour</option>
+          <option value="mm">Minute</option>
+          <option value="ss">Second</option>
+          <option value="xx">Empty</option>
+        </select>
+      </div>
+      <label class="up_down_margin">
+        Date Separator
+        <select [(ngModel)]="dateSeparator" required name="dateSeparator">
+          <option *ngFor="let separator of separators" [value]="separator">{{
+            separator
+          }}</option>
+        </select>
+      </label>
+      <label class="up_down_margin">
+        Time Separator
+        <select [(ngModel)]="timeSeparator" required name="timeSeparator">
+          <option *ngFor="let separator of separators" [value]="separator">{{
+            separator
+          }}</option>
+        </select>
+      </label>
+      <label class="up_down_margin">
+        Date-Time Separator
+        <select
+          [(ngModel)]="dateTimeSeparator"
+          required
+          name="dateTimeSeparator"
+        >
+          <option *ngFor="let separator of separators" [value]="separator">{{
+            separator
+          }}</option>
+        </select>
+      </label>
+    </form>
+    <div></div>
+    <button (click)="format()">Format !!!</button>
   </div>
 </div>
