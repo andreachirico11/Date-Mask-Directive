@@ -39,7 +39,7 @@
       <div class="up_down_margin">
         <p>Time Format</p>
         <select
-          *ngFor="let i of [1, 2, 3]"
+          *ngFor="let i of [0,1,2]"
           [(ngModel)]="timeSelect[i]"
           required
           [name]="'timeSelect' + i"
@@ -47,7 +47,7 @@
           <option value="hh">Hour</option>
           <option value="mm">Minute</option>
           <option value="ss">Second</option>
-          <option value="xx" >Empty</option>
+          <option value="xx">Empty</option>
         </select>
       </div>
       <label class="up_down_margin">
@@ -79,7 +79,16 @@
         </select>
       </label>
     </form>
-    <div></div>
+    <div class="defaults">
+      <!-- <p>Default Values</p> -->
+      <label>
+          Circular Arrows
+          <input type="checkbox" [(ngModel)]="circularArrows"/>
+      </label>
+      <button (click)="defaultDateFormat()">day-month-year</button>
+      <button (click)="defaultTimeFormat()">hour:minute:seconds</button>
+      <button (click)="defaultDateTimeFormat()">hh-MM-yyyy hh:mm:ss</button>
+    </div>
     <button (click)="format()">Format !!!</button>
   </div>
 </div>

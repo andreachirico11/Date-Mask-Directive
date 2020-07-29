@@ -26,6 +26,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   defaultValue = "2019-10-11T23:59:05";
   public dateSelect: string[] = [];
   public timeSelect: string[] = [];
+  public circularArrows: boolean = true;
 
 
   ngOnInit() {
@@ -60,6 +61,9 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.maskConfigOptions.dateTimeSeparator =
         Separators[this.dateTimeSeparator];
     }
+    //////////////////////////////
+    this.maskConfigOptions.circularArrowBehaviour = this.circularArrows;
+    /////////////////////////////////
     console.log(this.maskConfigOptions);
     setTimeout(() => {
       this.usingTheDirective = true;
@@ -109,4 +113,23 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
     return indexes.length > 1 ? true : false;
   }
+
+  defaultDateFormat() {
+      this.dateSelect = ['dd', 'MM', 'yy'];
+      this.timeSelect = [];
+      this.format();
+    }
+    
+    defaultTimeFormat() {
+      this.dateSelect = [];
+      this.timeSelect = ['hh', 'mm', 'ss'];
+      this.format();
+    }
+    
+    defaultDateTimeFormat() {
+      this.dateSelect = ['dd', 'MM', 'yy'];
+      this.timeSelect = ['hh', 'mm', 'ss'];
+      this.format();
+  }
+
 }
