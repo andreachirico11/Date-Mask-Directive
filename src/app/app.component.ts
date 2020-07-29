@@ -1,6 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+} from "@angular/core";
 import { MaskConfigOptions, Separators } from "./mask-directive/mask-options";
-import { FormControl, NgForm } from '@angular/forms';
+import { FormControl, NgForm } from "@angular/forms";
 
 @Component({
   selector: "app-root",
@@ -10,56 +16,97 @@ import { FormControl, NgForm } from '@angular/forms';
 export class AppComponent implements OnInit, AfterViewInit {
   maskConfigOptions: MaskConfigOptions;
   formControl: FormControl;
-  startSituation = true;
+  usingTheDirective = false;
   public dateModel: string;
   public timeModel: string;
   public dateSeparator: string = null;
   public timeSeparator: string = null;
   public dateTimeSeparator: string = null;
   public separators: string[] = [];
-  value = '2019-10-11T23:59:05';
-  public dateSelect: string[] = []; 
+  defaultValue = "2019-10-11T23:59:05";
+  public dateSelect: string[] = [];
   public timeSelect: string[] = [];
-  
-  @ViewChild('configForm') configForm: NgForm;
 
 
-  ngOnInit() {    
-    this.separators = [ ... (Object.keys(Separators).map(key => Separators[key])) ];
-    this.formControl = new FormControl(this.value);
-    // this.changeMaskOpt(this.dateInputEnum.DATE);
-  }
-
-  ngAfterViewInit() {
-
+  ngOnInit() {
+    this.separators = [
+      ...Object.keys(Separators).map((key) => Separators[key]),
+    ];
+    this.formControl = new FormControl(this.defaultValue);
   }
   
-  format() {
-    if(this.startSituation === true) {
-      this.startSituation = false;
+  ngAfterViewInit() {}
+  
+  format(): void {
+    this.usingTheDirective = false;
+    this.maskConfigOptions = {};
+    this.formControl = new FormControl(this.defaultValue);
+    // this.formControl.setValue(this.defaultValue)
+    const date = this.createDate();
+    if (date) {
+      this.maskConfigOptions.dateConfiguration = date;
     }
-    let date = this.dateSelect.join("");
-    if(/i/g.test(date)) {
-      date = null;
-      console.log(date);
-      
+    const time = this.createTime();
+    if (time) {
+      this.maskConfigOptions.timeConfiguration = time;
     }
-    let time = this.timeSelect.join("");
-    this.maskConfigOptions = {
-      dateConfiguration: date ? date : null,
-      timeConfiguration: time ? time : null,
-      dateSeparator: this.dateSeparator ? Separators[this.dateSeparator] : null,
-      timeSeparator: this.timeSeparator ? Separators[this.timeSeparator] : null,
-      dateTimeSeparator: this.dateTimeSeparator ? Separators[this.dateTimeSeparator] : null
+    if (this.dateSeparator) {
+      this.maskConfigOptions.dateSeparator = Separators[this.dateSeparator];
     }
+    if (this.timeSeparator) {
+      this.maskConfigOptions.timeSeparator = Separators[this.timeSeparator];
+    }
+    if (this.dateTimeSeparator) {
+      this.maskConfigOptions.dateTimeSeparator =
+        Separators[this.dateTimeSeparator];
+    }
+    console.log(this.maskConfigOptions);
+    setTimeout(() => {
+      this.usingTheDirective = true;
+    }, 100);
   }
 
+  createDate(): string {
+    if (this.dateSelect.length < 3) {
+      return null;
+    }
+    if(this.dateSelect.findIndex((sigle) => sigle === "xx")!== -1) {
+      return null;
+    }
+    return this.findMoreOccurenciesForAllElementInArray([...this.dateSelect])
+      ? null
+      : this.dateSelect.join("");
+  }
 
+  createTime(): string {
+    const filteredTime = this.timeSelect.filter((sigle) => sigle !== "xx");
+    if(filteredTime.length < 2) {
+      return null;
+    }
+    return this.findMoreOccurenciesForAllElementInArray([...filteredTime])
+      ? null
+      : filteredTime.join("");
+  }
 
-  // cercare i casi nulli in date e in time e fare prove
-  
-  
+  findMoreOccurenciesForAllElementInArray(arr: string[]) {
+    for (let i = 0; i < arr.length; i++) {
+      if (this.findIfElementOccurMoreTimeInArray([...arr], arr[i])) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  findIfElementOccurMoreTimeInArray(arr: string[], element: string): boolean {
+    let i = 0;
+    const indexes = [];
+    while (i !== -1) {
+      i = arr.indexOf(element, i);
+      if (i !== -1) {
+        indexes.push(i);
+        i++;
+      }
+    }
+    return indexes.length > 1 ? true : false;
+  }
 }
-
-
-

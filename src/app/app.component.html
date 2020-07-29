@@ -2,7 +2,7 @@
   <div class="row">
     <form #configForm="ngForm">
       <input
-        *ngIf="startSituation; else maskedInput"
+        *ngIf="!usingTheDirective; else maskedInput"
         type="text"
         [formControl]="formControl"
         id="mainInput"
@@ -28,6 +28,7 @@
           [(ngModel)]="dateSelect[i]"
           required
           [name]="'dateSelect' + i"
+          
         >
           <option value="dd">Day</option>
           <option value="MM">Month</option>
@@ -46,7 +47,7 @@
           <option value="hh">Hour</option>
           <option value="mm">Minute</option>
           <option value="ss">Second</option>
-          <option value="xx">Empty</option>
+          <option value="xx" >Empty</option>
         </select>
       </div>
       <label class="up_down_margin">

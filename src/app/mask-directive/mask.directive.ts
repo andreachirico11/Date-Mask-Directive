@@ -295,7 +295,7 @@ export class MaskDirective implements OnInit {
                     this.handleYears(key);
                     return false;
                 case dateTypes.HOURS:
-                    this.handleTimeValues(key, () => this.hour, newVal => this.hour = newVal, 25, dateTypes.HOURS);
+                    this.handleTimeValues(key, () => this.hour, newVal => this.hour = newVal, 24, dateTypes.HOURS);
                     return false;
                 case dateTypes.MINUTES:
                     this.handleTimeValues(key, () => this.minute, newVal => this.minute = newVal, 60, dateTypes.MINUTES);
