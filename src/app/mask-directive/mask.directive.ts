@@ -471,9 +471,9 @@ export class MaskDirective implements OnInit {
       }
   }
 
-  increaseOrDecrease(valueToAdd: number, actualPosition: dateTypes, getter: () => string, setter: (newVal) => void, min: number, max: number, handlingYear?: boolean): void {
+  increaseOrDecrease(valueToAdd: number, actualPosition: dateTypes, getter: () => string, setter: (newVal) => void, min: number, max: number, handlingYear?: boolean, customArrowB?: ArrowBehaviours): void {
     handlingYear ? handlingYear = true : handlingYear = false; 
-    switch (this.arrowBehaviours) {
+    switch (customArrowB ? customArrowB : this.arrowBehaviours) {
           case ArrowBehaviours.circular_with_position_and_control:
                 let newNumber = Number(getter()) + valueToAdd;
                 if (isNaN(newNumber)) {
@@ -526,8 +526,10 @@ export class MaskDirective implements OnInit {
                             this.month = this.zeroFormatter(1, false);
                             this.year = this.zeroFormatter(this.maxYear, true);
                         }
+                        this.handleCursor(actualPosition);
+                    } else {
+                        this.increaseOrDecrease(valueToAdd, actualPosition, getter, setter, min, max, handlingYear, ArrowBehaviours.circular_with_position_and_control);
                     }
-                this.handleCursor(actualPosition);
                 break;
             case ArrowBehaviours.limited_with_control:
                 let newNum = Number(getter()) + valueToAdd;
