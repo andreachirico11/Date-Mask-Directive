@@ -6,7 +6,7 @@ export type MaskConfigOptions = {
     dateTimeSeparator?: Separators,
     maxYear?: number,
     minYear?: number,
-    arrowsBehaviour?: ArrowBehaviour
+    arrowBehaviours?: ArrowBehaviours
 }
 
 export enum Separators {
@@ -17,7 +17,7 @@ export enum Separators {
     dot = '.'
 }
 
-export enum ArrowBehaviour {
+export enum ArrowBehaviours {
     circular_without_position,
     circular_with_position_and_control,
     limited_with_control,

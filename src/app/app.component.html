@@ -81,8 +81,11 @@
     </form>
     <div class="defaults">
       <label>
-          <!-- Circular Arrows
-          <input type="checkbox" [(ngModel)]="circularArrows"/> -->
+        <select [(ngModel)]="arrowBehaviour" required name="arrowBehaviour">
+          <option *ngFor="let arrowBehaviour of arrowBehaviours" [value]="arrowBehaviour">{{
+            arrowBehaviour.replace(regExp,' ')
+          }}</option>
+        </select>
       </label>
       <button (click)="defaultDateFormat()">day-month-year</button>
       <button (click)="defaultTimeFormat()">hour:minute:seconds</button>
