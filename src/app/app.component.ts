@@ -39,14 +39,12 @@ export class AppComponent implements OnInit, AfterViewInit {
       ...Object.keys(ArrowBehaviours).map((key) => ArrowBehaviours[key])
         .filter(b => b.length > 1),
     ];
-    this.formControl = new FormControl(this.defaultValue);
-    console.log(this.arrowBehaviours);
-    
+    this.formControl = new FormControl(this.defaultValue);   
   }
   
   ngAfterViewInit() {}
   
-  format(): void {
+  format(): void {   
     this.usingTheDirective = false;
     this.maskConfigOptions = {};
     this.formControl = new FormControl(this.defaultValue);
@@ -73,6 +71,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         Separators[this.dateTimeSeparator];
     }
     this.maskConfigOptions.arrowBehaviours = ArrowBehaviours[this.arrowBehaviour];
+    console.log('Mask Configuration: ', this.maskConfigOptions);    
     setTimeout(() => {
       this.usingTheDirective = true;
     }, 100);

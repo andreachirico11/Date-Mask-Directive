@@ -186,7 +186,7 @@ export class MaskDirective implements OnInit {
       this.timeSeparator = this.maskOptions.timeSeparator ? this.maskOptions.timeSeparator : Separators.colon;
       this.maxYear = this.maskOptions.maxYear ? this.maskOptions.maxYear : 2050;
       this.minYear = this.maskOptions.minYear ? this.maskOptions.minYear : 1970;
-      this.arrowBehaviours = this.maskOptions.arrowBehaviours ? this.maskOptions.arrowBehaviours : ArrowBehaviours.limited_with_control;
+      this.arrowBehaviours = this.maskOptions.arrowBehaviours !== null ? this.maskOptions.arrowBehaviours : ArrowBehaviours.limited_with_control;
     }
 
 
@@ -472,7 +472,8 @@ export class MaskDirective implements OnInit {
   }
 
   increaseOrDecrease(valueToAdd: number, actualPosition: dateTypes, getter: () => string, setter: (newVal) => void, min: number, max: number, handlingYear?: boolean): void {
-      switch (this.arrowBehaviours) {
+    handlingYear ? handlingYear = true : handlingYear = false; 
+    switch (this.arrowBehaviours) {
           case ArrowBehaviours.circular_with_position_and_control:
                 let newNumber = Number(getter()) + valueToAdd;
                 if (isNaN(newNumber)) {
@@ -487,13 +488,46 @@ export class MaskDirective implements OnInit {
                     setter(handlingYear ? this.maxYear : max.toString());
                     }
                 else {
-                    setter(("00000" + newNumber.toString()).slice(handlingYear ? -4 : - 2));
+                    setter( this.zeroFormatter(newNumber, handlingYear));
                     }
                     this.handleCursor(actualPosition);
                 break;
 
             case ArrowBehaviours.circular_without_position:
-
+                    if(actualPosition === dateTypes.DAYS || actualPosition === dateTypes.MONTHS || actualPosition === dateTypes.YEARS) {
+                        const maxdays = this.quantifyMonthNumbOfDays(Number(this.month), Number(this.year));
+                        const newDay = valueToAdd + Number(this.day);
+                        if(newDay > maxdays) {
+                            this.day = this.zeroFormatter(1, false);
+                            this.month = this.zeroFormatter(Number(this.month) + 1, false);
+                        } else if(newDay < 1) {
+                            const prevMonth = (Number(this.month) - 1);
+                            this.day = (this.quantifyMonthNumbOfDays(prevMonth, Number(this.year))).toString();
+                            this.month = this.zeroFormatter(prevMonth, false);
+                        } else {
+                            this.day = this.zeroFormatter(newDay, false);
+                        }
+                        const monthNum = Number(this.month);
+                        if(monthNum > 12) {
+                            this.month = this.zeroFormatter(1, false);
+                            this.year = this.zeroFormatter((Number(this.year) + 1), true);
+                        } else if(monthNum < 1) {
+                            this.month = this.zeroFormatter(12, false);
+                            this.year = this.zeroFormatter((Number(this.year) - 1), true);
+                        }
+                        const yearNum = Number(this.year);
+                        if(yearNum > this.maxYear) {
+                            this.day = this.zeroFormatter(1, false);
+                            this.month = this.zeroFormatter(1, false);
+                            this.year = this.zeroFormatter(this.minYear, true);
+                        }
+                        if(yearNum < this.minYear) {
+                            this.day = this.zeroFormatter(1, false);
+                            this.month = this.zeroFormatter(1, false);
+                            this.year = this.zeroFormatter(this.maxYear, true);
+                        }
+                    }
+                this.handleCursor(actualPosition);
                 break;
             case ArrowBehaviours.limited_with_control:
                 let newNum = Number(getter()) + valueToAdd;
@@ -506,7 +540,7 @@ export class MaskDirective implements OnInit {
                         this.handleCursor(this.getNextOrPrevDatatype(actualPosition));
                         return;
                     }
-                    let stringNewNumber = ("00000" + newNum.toString()).slice(handlingYear ? -4 : -2);
+                    let stringNewNumber = this.zeroFormatter(newNum, handlingYear);
                     const previousNum = getter();
                     setter(stringNewNumber);
                     if (!this.monthOrDayValidator()) {
@@ -523,6 +557,9 @@ export class MaskDirective implements OnInit {
         }
   }
 
+  zeroFormatter(newNum: number , handlingYear: boolean) {
+      return ("00000" + newNum.toString()).slice(handlingYear ? -4 : -2)
+  }
 
   quantifyMonthNumbOfDays(month: number, year: number): number {
       switch (month) {
