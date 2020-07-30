@@ -5,7 +5,7 @@ import {
   ElementRef,
   AfterViewInit,
 } from "@angular/core";
-import { MaskConfigOptions, Separators } from "./mask-directive/mask-options";
+import { MaskConfigOptions, Separators, ArrowBehaviour } from "./mask-directive/mask-options";
 import { FormControl, NgForm } from "@angular/forms";
 
 @Component({
@@ -26,7 +26,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   defaultValue = "2019-10-11T23:59:05";
   public dateSelect: string[] = [];
   public timeSelect: string[] = [];
-  public circularArrows: boolean = true;
 
 
   ngOnInit() {
@@ -51,6 +50,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (time) {
       this.maskConfigOptions.timeConfiguration = time;
     }
+    if(!date && time) {
+      this.formControl = new FormControl(this.defaultValue.substring(11));
+    }
     if (this.dateSeparator) {
       this.maskConfigOptions.dateSeparator = Separators[this.dateSeparator];
     }
@@ -62,9 +64,8 @@ export class AppComponent implements OnInit, AfterViewInit {
         Separators[this.dateTimeSeparator];
     }
     //////////////////////////////
-    this.maskConfigOptions.circularArrowBehaviour = this.circularArrows;
+    this.maskConfigOptions.arrowsBehaviour = ArrowBehaviour.circular_with_position_and_control;
     /////////////////////////////////
-    console.log(this.maskConfigOptions);
     setTimeout(() => {
       this.usingTheDirective = true;
     }, 100);

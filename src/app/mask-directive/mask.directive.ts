@@ -6,7 +6,7 @@ import {
   HostListener,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { MaskConfigOptions, Separators } from './mask-options';
+import { MaskConfigOptions, Separators, ArrowBehaviour } from './mask-options';
 
 @Directive({
   selector: '[dateMask]',
@@ -21,7 +21,7 @@ export class MaskDirective implements OnInit {
   timeSeparator;
   maxYear:number ;
   minYear: number;
-  circularArrowBehaviour: boolean;
+  arrowsBehaviour: ArrowBehaviour;
   dateOnlyMode: boolean;
 
   get splittedHtmlValueBeforeFormat(): string[] { 
@@ -186,8 +186,8 @@ export class MaskDirective implements OnInit {
       this.timeSeparator = this.maskOptions.timeSeparator ? this.maskOptions.timeSeparator : Separators.colon;
       this.maxYear = this.maskOptions.maxYear ? this.maskOptions.maxYear : 2050;
       this.minYear = this.maskOptions.minYear ? this.maskOptions.minYear : 1970;
-      this.circularArrowBehaviour = this.maskOptions.circularArrowBehaviour ? this.maskOptions.circularArrowBehaviour : false;
-  }
+      this.arrowsBehaviour = this.maskOptions.arrowsBehaviour ? this.maskOptions.arrowsBehaviour : ArrowBehaviour.limited_with_control;
+    }
 
 
   buildSplittedViewModel(): void {
@@ -215,7 +215,7 @@ export class MaskDirective implements OnInit {
       year = month = day = hour = minute = second = null;
       if (this.splittedHtmlValueBeforeFormat.length > 1) {
           if (this.dateOnlyMode) {
-              [hour, minute, second] = this.splittedHtmlValueBeforeFormat;
+                [hour, minute, second] = this.splittedHtmlValueBeforeFormat;
           } else {
               [year, month, day, hour, minute, second] = this.splittedHtmlValueBeforeFormat;
           }
@@ -274,16 +274,16 @@ export class MaskDirective implements OnInit {
           this.handleDelete(actualPosition);
       }
       if (key === 'ArrowLeft') {
-        if(this.circularArrowBehaviour) {
+          if(this.arrowsBehaviour === ArrowBehaviour.circular_with_position_and_control) {
             this.leftRightArrowValidator(actualPosition);
-        }
-        this.handleCursor(this.getNextOrPrevDatatype(actualPosition, true))
+            }
+            this.handleCursor(this.getNextOrPrevDatatype(actualPosition, true))
       }
       if (key === 'ArrowRight') {
-          if(this.circularArrowBehaviour) {
-              this.leftRightArrowValidator(actualPosition);
-          }
-          this.handleCursor(this.getNextOrPrevDatatype(actualPosition));
+            if(this.arrowsBehaviour === ArrowBehaviour.circular_with_position_and_control) {
+                this.leftRightArrowValidator(actualPosition);
+            }
+            this.handleCursor(this.getNextOrPrevDatatype(actualPosition));
       }
       if (key === 'ArrowUp') {
           this.handleUpDownArrows(1, actualPosition);
@@ -478,36 +478,73 @@ export class MaskDirective implements OnInit {
           this.handleCursor(actualPosition);
           return;
         }
-      if(this.circularArrowBehaviour === true) {
-          if(newNumber === (max + 1)) {
-              setter(handlingYear ? this.minYear : '0' + min.toString());
-          }
-          else if(newNumber === (min - 1)) {
-            setter(handlingYear ? this.maxYear : max.toString());
-          }
-          else {
-              setter(("00000" + newNumber.toString()).slice(handlingYear ? -4 : - 2));
-          }
-          this.handleCursor(actualPosition);
-      } else {
-          if (newNumber === (min - 1) || newNumber > max) {
-              this.handleCursor(this.getNextOrPrevDatatype(actualPosition));
-              return;
-          }
-          let stringNewNumber = ("00000" + newNumber.toString()).slice(handlingYear ? -4 : - 2);
-          const previousNum = getter();
-          setter(stringNewNumber);
-          if (!this.monthOrDayValidator()) {
-              setter(previousNum);
-              this.handleCursor(actualPosition);
-              return;
-          }
-          if (stringNewNumber === max.toString()) {
-              this.handleCursor(this.getNextOrPrevDatatype(actualPosition));
-          } else {
-              this.handleCursor(actualPosition);
-          }
-      }
+        switch (this.arrowsBehaviour) {
+            case ArrowBehaviour.circular_with_position_and_control:
+                if(newNumber === (max + 1)) {
+                    setter(handlingYear ? this.minYear : '0' + min.toString());
+                    }
+                else if(newNumber === (min - 1)) {
+                    setter(handlingYear ? this.maxYear : max.toString());
+                    }
+                else {
+                    setter(("00000" + newNumber.toString()).slice(handlingYear ? -4 : - 2));
+                    }
+                    this.handleCursor(actualPosition);
+                break;
+
+            case ArrowBehaviour.circular_without_position:
+                break;
+
+            case ArrowBehaviour.limited_with_control:
+                    if (newNumber === min - 1 || newNumber > max) {
+                        this.handleCursor(this.getNextOrPrevDatatype(actualPosition));
+                        return;
+                    }
+                    let stringNewNumber = ("00000" + newNumber.toString()).slice(handlingYear ? -4 : -2);
+                    const previousNum = getter();
+                    setter(stringNewNumber);
+                    if (!this.monthOrDayValidator()) {
+                        setter(previousNum);
+                        this.handleCursor(actualPosition);
+                        return;
+                    }
+                    if (stringNewNumber === max.toString()) {
+                        this.handleCursor(this.getNextOrPrevDatatype(actualPosition));
+                    } else {
+                        this.handleCursor(actualPosition);
+                    }
+                    break;
+        }
+    //   if(this.arrowsBehaviour === true) {
+    //       if(newNumber === (max + 1)) {
+    //           setter(handlingYear ? this.minYear : '0' + min.toString());
+    //       }
+    //       else if(newNumber === (min - 1)) {
+    //         setter(handlingYear ? this.maxYear : max.toString());
+    //       }
+    //       else {
+    //           setter(("00000" + newNumber.toString()).slice(handlingYear ? -4 : - 2));
+    //       }
+    //       this.handleCursor(actualPosition);
+    //   } else {
+    //       if (newNumber === (min - 1) || newNumber > max) {
+    //           this.handleCursor(this.getNextOrPrevDatatype(actualPosition));
+    //           return;
+    //       }
+    //       let stringNewNumber = ("00000" + newNumber.toString()).slice(handlingYear ? -4 : - 2);
+    //       const previousNum = getter();
+    //       setter(stringNewNumber);
+    //       if (!this.monthOrDayValidator()) {
+    //           setter(previousNum);
+    //           this.handleCursor(actualPosition);
+    //           return;
+    //       }
+    //       if (stringNewNumber === max.toString()) {
+    //           this.handleCursor(this.getNextOrPrevDatatype(actualPosition));
+    //       } else {
+    //           this.handleCursor(actualPosition);
+    //       }
+    //   }
   }
 
 
