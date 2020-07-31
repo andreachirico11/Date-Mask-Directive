@@ -54,6 +54,8 @@ export class AppComponent implements OnInit {
     }
     if(!date && time) {
       this.formControl = new FormControl(this.defaultValue.substring(11));
+    } else {
+      this.formControl = new FormControl(this.defaultValue);
     }
     if(this.noInitialValue === true) {
       this.formControl = new FormControl(null);

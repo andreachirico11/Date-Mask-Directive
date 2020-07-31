@@ -570,6 +570,7 @@ export class MaskDirective implements OnInit {
   }
 
   zeroFormatter(newNum: number , handlingYear: boolean) {
+      newNum = isNaN(newNum) ? 1 : newNum
       return ("00000" + newNum.toString()).slice(handlingYear ? -4 : -2)
   }
 
@@ -609,7 +610,7 @@ export class MaskDirective implements OnInit {
       this.second = this.zeroFormatter(actualDate.getSeconds(), false);
       if(!this.dateOnlyMode) {
         this.day = this.zeroFormatter(actualDate.getDate(), false);
-        this.month = this.zeroFormatter(actualDate.getMonth(), false);
+        this.month = this.zeroFormatter((actualDate.getMonth() + 1), false);
         this.year = this.zeroFormatter(actualDate.getFullYear(), true);
       } 
   }
