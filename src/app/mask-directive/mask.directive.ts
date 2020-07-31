@@ -189,7 +189,8 @@ export class MaskDirective implements OnInit {
       this.timeSeparator = this.maskOptions.timeSeparator ? this.maskOptions.timeSeparator : Separators.colon;
       this.maxYear = this.maskOptions.maxYear ? this.maskOptions.maxYear : 2050;
       this.minYear = this.maskOptions.minYear ? this.maskOptions.minYear : 1970;
-      this.arrowBehaviours = this.maskOptions.arrowBehaviours !== null ? this.maskOptions.arrowBehaviours : ArrowBehaviours.limited_with_control;
+      this.arrowBehaviours = this.maskOptions.arrowBehaviours || this.maskOptions.arrowBehaviours === 0
+          ? this.maskOptions.arrowBehaviours : ArrowBehaviours.limited_with_control;
       this.ifNoEntryUseActualDate = this.maskOptions.ifNoEntryUseActualDate || null;
 
     }
@@ -275,7 +276,7 @@ export class MaskDirective implements OnInit {
           return true
       }
       event.preventDefault();
-      if(this.isDateNull && this.firstAction && this.ifNoEntryUseActualDate) {
+      if(this.isDateNull() && this.firstAction && this.ifNoEntryUseActualDate) {
         this.replaceWithActualDate();
         this.firstAction = false;
         return false;
@@ -603,21 +604,37 @@ export class MaskDirective implements OnInit {
       }
   }
 
-  replaceWithActualDate() {
-      const actualDate = new Date();
-      this.hour = this.zeroFormatter(actualDate.getHours(), false);
-      this.minute = this.zeroFormatter(actualDate.getMinutes(), false);
-      this.second = this.zeroFormatter(actualDate.getSeconds(), false);
-      if(!this.dateOnlyMode) {
+  replaceWithActualDate(): void {
+    const actualDate = new Date();
+    switch (this.viewModel.length) {
+        case 10:
+            this.resetDate(actualDate);
+            break;
+        case 5: case 8:
+            this.resetHours(actualDate);
+            break;
+        default:
+            this.resetHours(actualDate);
+            this.resetDate(actualDate);
+            break;
+        }
+    }
+
+    resetHours(actualDate: Date): void {
+        this.hour = this.zeroFormatter(actualDate.getHours(), false);
+        this.minute = this.zeroFormatter(actualDate.getMinutes(), false);
+        this.second = this.zeroFormatter(actualDate.getSeconds(), false);
+    }
+
+    resetDate(actualDate: Date): void {
         this.day = this.zeroFormatter(actualDate.getDate(), false);
         this.month = this.zeroFormatter((actualDate.getMonth() + 1), false);
         this.year = this.zeroFormatter(actualDate.getFullYear(), true);
-      } 
-  }
+    }
 
   isDateNull(): boolean {
         const array = [...this.splittedHtmlValueBeforeFormat];
-        return array.every(element => !isNaN(Number(element)))
+        return array.every(element => isNaN(Number(element)))
   }
 
   // ##################################### CURSOR POSITION
