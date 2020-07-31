@@ -1,12 +1,9 @@
 import {
   Component,
   OnInit,
-  ViewChild,
-  ElementRef,
-  AfterViewInit,
 } from "@angular/core";
 import { MaskConfigOptions, Separators, ArrowBehaviours } from "./mask-directive/mask-options";
-import { FormControl, NgForm } from "@angular/forms";
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: "app-root",
@@ -29,6 +26,7 @@ export class AppComponent implements OnInit {
   public dateSelect: string[] = [];
   public timeSelect: string[] = [];
   public regExp = new RegExp('_', 'g');
+  public noInitialValue = false;
 
 
   ngOnInit() {
@@ -46,7 +44,6 @@ export class AppComponent implements OnInit {
   format(): void {   
     this.usingTheDirective = false;
     this.maskConfigOptions = {};
-    this.formControl = new FormControl(this.defaultValue);
     const date = this.createDate();
     if (date) {
       this.maskConfigOptions.dateConfiguration = date;
@@ -58,6 +55,7 @@ export class AppComponent implements OnInit {
     if(!date && time) {
       this.formControl = new FormControl(this.defaultValue.substring(11));
     }
+    this.formControl = new FormControl(this.noInitialValue === false ? this.defaultValue : null);
     if (this.dateSeparator) {
       this.maskConfigOptions.dateSeparator = this.dateSeparator;
     }

@@ -90,6 +90,9 @@
       <button (click)="defaultDateFormat()">day-month-year</button>
       <button (click)="defaultTimeFormat()">hour:minute:seconds</button>
       <button (click)="defaultDateTimeFormat()">dd-MM-yyyy hh:mm:ss</button>
+      <label>No Initial Value
+        <input type="checkbox" [(ngModel)]="noInitialValue"/>
+      </label>
     </div>
     <button (click)="format()">Format !!!</button>
   </div>
