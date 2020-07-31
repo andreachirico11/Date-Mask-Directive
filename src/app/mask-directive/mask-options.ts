@@ -6,7 +6,8 @@ export type MaskConfigOptions = {
     dateTimeSeparator?: Separators,
     maxYear?: number,
     minYear?: number,
-    arrowBehaviours?: ArrowBehaviours
+    arrowBehaviours?: ArrowBehaviours,
+    ifNoEntryUseActualDate?: boolean
 }
 
 export enum Separators {

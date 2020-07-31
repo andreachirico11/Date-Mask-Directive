@@ -23,6 +23,8 @@ export class MaskDirective implements OnInit {
   minYear: number;
   arrowBehaviours: ArrowBehaviours;
   dateOnlyMode: boolean;
+  ifNoEntryUseActualDate: boolean;
+  firstAction: boolean;
 
   get splittedHtmlValueBeforeFormat(): string[] { 
       //"2019-05-22T03:24:07", HOW INPUT IS FORMATTED
@@ -113,6 +115,7 @@ export class MaskDirective implements OnInit {
       this.buildSplittedViewModel();
       this.formatInputValueBasedOnViewModel();
       this.moveCursorToStartPosition();
+      this.firstAction = true;
   }
 
 
@@ -187,6 +190,8 @@ export class MaskDirective implements OnInit {
       this.maxYear = this.maskOptions.maxYear ? this.maskOptions.maxYear : 2050;
       this.minYear = this.maskOptions.minYear ? this.maskOptions.minYear : 1970;
       this.arrowBehaviours = this.maskOptions.arrowBehaviours !== null ? this.maskOptions.arrowBehaviours : ArrowBehaviours.limited_with_control;
+      this.ifNoEntryUseActualDate = this.maskOptions.ifNoEntryUseActualDate || null;
+
     }
 
 
@@ -264,12 +269,17 @@ export class MaskDirective implements OnInit {
           actualPosition = this.determinePositionBasedOnModel(
               cursorStartingPosition
           );
+    
 
       if (key === 'Tab' || key === 'Enter') {
           return true
       }
-
       event.preventDefault();
+      if(this.isDateNull && this.firstAction && this.ifNoEntryUseActualDate) {
+        this.replaceWithActualDate();
+        this.firstAction = false;
+        return false;
+      }
       if (key === 'Backspace' || key === 'Delete') {
           this.handleDelete(actualPosition);
       }
@@ -592,6 +602,22 @@ export class MaskDirective implements OnInit {
       }
   }
 
+  replaceWithActualDate() {
+      const actualDate = new Date();
+      this.hour = this.zeroFormatter(actualDate.getHours(), false);
+      this.minute = this.zeroFormatter(actualDate.getMinutes(), false);
+      this.second = this.zeroFormatter(actualDate.getSeconds(), false);
+      if(!this.dateOnlyMode) {
+        this.day = this.zeroFormatter(actualDate.getDate(), false);
+        this.month = this.zeroFormatter(actualDate.getMonth(), false);
+        this.year = this.zeroFormatter(actualDate.getFullYear(), true);
+      } 
+  }
+
+  isDateNull(): boolean {
+        const array = [...this.splittedHtmlValueBeforeFormat];
+        return array.every(element => !isNaN(Number(element)))
+  }
 
   // ##################################### CURSOR POSITION
 
