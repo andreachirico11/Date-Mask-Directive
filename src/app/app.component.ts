@@ -13,18 +13,18 @@ import { FormControl, NgForm } from "@angular/forms";
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
   maskConfigOptions: MaskConfigOptions;
   formControl: FormControl;
   usingTheDirective = false;
   public dateModel: string;
   public timeModel: string;
-  public dateSeparator: string = null;
-  public timeSeparator: string = null;
-  public dateTimeSeparator: string = null;
+  public dateSeparator: Separators = null;
+  public timeSeparator: Separators = null;
+  public dateTimeSeparator: Separators = null;
   public separators: string[] = [];
   public arrowBehaviours: string[] = [];
-  public arrowBehaviour: string;
+  public arrowBehaviour: string = null;
   defaultValue = "2019-10-11T23:59:05";
   public dateSelect: string[] = [];
   public timeSelect: string[] = [];
@@ -42,13 +42,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.formControl = new FormControl(this.defaultValue);   
   }
   
-  ngAfterViewInit() {}
   
   format(): void {   
     this.usingTheDirective = false;
     this.maskConfigOptions = {};
     this.formControl = new FormControl(this.defaultValue);
-    // this.formControl.setValue(this.defaultValue)
     const date = this.createDate();
     if (date) {
       this.maskConfigOptions.dateConfiguration = date;
@@ -61,16 +59,17 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.formControl = new FormControl(this.defaultValue.substring(11));
     }
     if (this.dateSeparator) {
-      this.maskConfigOptions.dateSeparator = Separators[this.dateSeparator];
+      this.maskConfigOptions.dateSeparator = this.dateSeparator;
     }
     if (this.timeSeparator) {
-      this.maskConfigOptions.timeSeparator = Separators[this.timeSeparator];
+      this.maskConfigOptions.timeSeparator = this.timeSeparator;
     }
     if (this.dateTimeSeparator) {
-      this.maskConfigOptions.dateTimeSeparator =
-        Separators[this.dateTimeSeparator];
+      this.maskConfigOptions.dateTimeSeparator = this.dateTimeSeparator;
     }
-    this.maskConfigOptions.arrowBehaviours = ArrowBehaviours[this.arrowBehaviour];
+    if(this.arrowBehaviour) {
+      this.maskConfigOptions.arrowBehaviours = ArrowBehaviours[this.arrowBehaviour];
+    }
     console.log('Mask Configuration: ', this.maskConfigOptions);    
     setTimeout(() => {
       this.usingTheDirective = true;

@@ -458,7 +458,7 @@ export class MaskDirective implements OnInit {
               this.increaseOrDecrease(valueToAdd, actualPosition, () => this.year, newY => this.year = newY, this.minYear, this.maxYear, true);
               break;
           case dateTypes.HOURS:
-              this.increaseOrDecrease(valueToAdd, actualPosition, () => this.hour, newH => this.hour = newH, 0, 24);
+              this.increaseOrDecrease(valueToAdd, actualPosition, () => this.hour, newH => this.hour = newH, 0, 23);
               break;
           case dateTypes.MINUTES:
               this.increaseOrDecrease(valueToAdd, actualPosition, () => this.minute, newH => this.minute = newH, 0, 59);
