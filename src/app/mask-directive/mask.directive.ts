@@ -202,12 +202,14 @@ export class MaskDirective implements OnInit {
         switch (length) {
             case 10: // date
                 regexSeparator = this.dateSeparator;
+                this.dateOnlyMode = false;
                 break;
             case 5: case 8:// time with or without seconds
                 regexSeparator = this.timeSeparator;
                 this.dateOnlyMode = true;
                 break;
             default: // complete date
+                this.dateOnlyMode = false;
                 regexSeparator = this.timeSeparator + '\\' + this.dateSeparator + '\\' + this.dateTimeSeparator;
                 break;
         }
