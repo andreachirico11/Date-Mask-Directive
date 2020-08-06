@@ -149,7 +149,7 @@ export class MaskDirective implements OnInit {
 
 
     buildViewModel(): void {
-        let newViewModel = '';
+        let newViewModel = 'yyyy-MM-dd hh:mm:ss';
         if (this.maskOptions.dateConfiguration) {
             const splittedDateModel = this.maskOptions.dateConfiguration.split('');
             let dateModel = [];
