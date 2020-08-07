@@ -1,5 +1,5 @@
 # Date Mask Directive
-> #### Simple directive to simulate the html mask of the input `type="date"` with a custom configuration.
+> #### Simple directive to simulate the html `type="date"` input tag with a custom configuration.
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.5.  
 
 ## Table of contents
