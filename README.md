@@ -1,23 +1,25 @@
 # Date Mask Directive
-#### Simple directive to simulate the html mask of the input `type="date"` with a custom configuration.
+> #### Simple directive to simulate the html mask of the input `type="date"` with a custom configuration.
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.5.  
 
 ## Table of contents
-* Installation
-* Description
-* Configurations
-    * Date Configuration
-    * Time Configuration
-    * Date-Time Configuration
-    * Separators
-* Additional Settings
-    * Arrows Behaviour
-    * First Value Behaviour
-    * Min Max year
+* [Installation](#installation-and-basic-usage)
+* [Description](#description)
+* [Configurations](#configurations)
+    * [Date Configuration](#date-configuration)
+    * [Time Configuration](#time-configuration)
+    * [Date-Time Configuration](#date-time-configuration)
+    * [Separators](#separators)
+* [Additional Settings](#Additional-Settings)
+    * [Arrows Behaviour](#Arrows-Behaviour)
+    * [First Value Behaviour](#First-Value-Behaviour)
+    * [Min Max year](#Min-Max-year)
+* [More](#More)
 
 
 &nbsp;  
 &nbsp; 
+
 ## Installation and basic usage
 1. Include the mask-directive folder in your project
 2. Include it in the declaration inside `app.module.ts` file   
@@ -125,11 +127,40 @@ The `ArrowBehaviours` enum contains 3 possible actions for up/down arrow keys.
     circular_with_position_and_control,
     limited_with_control,
 }
+////
+
+public myMaskConfigOptions: MaskConfigOptions = {
+    arrowBehaviours: ArrowBehaviours.limited_with_control
+    // etc
+}
 ```
-1. #### `circular_without_position`: when up or down arrow is held down in every value of the date days increase or decrease by one, when the maximum or minimum days for the month is reached the month increase or decrease by one and the day start from one. The year has the same behaviour according to the month
-
-
+1. `circular_without_position`: when up/down key is held down in every value of the date days increase or decrease by one, when the maximum or minimum days for the month is reached the month increase or decrease by one and the day start from one. The year has the same behaviour according to the month. The time values have circular behaviour.
+2. `circular_with_position_and_control`: Every value increases or decreases by one, when you move to the next value with left/right key the validator verifies the whole date-time and if isn't valid the last edited value is erased.
+3. `limited_with_control`: Every value increases or decreases by one, when the max or min is reached the cursor moves to the next value. Every time the validators run and if isn't valid arrow key event cannot proceed.
 
 
 ### First Value Behaviour
+If it's present in the mask configuration in case of null or empty initial value it replace it with the actual date **only after the first action**
+```
+   myMaskConfigOptions: MaskConfigOptions = {
+       ifNoEntryUseActualDate: true
+       // etc
+   }  
+```
 ### Min Max year
+They set the maximum and minimum value for years, the default values are 1970 and 2050.
+```
+ myMaskConfigOptions: MaskConfigOptions = {
+    maxYear: 2000,
+    minYear: 1990,
+       // etc
+   }  
+```
+&nbsp;  
+&nbsp;  
+
+## More
+1. Left and Right arrows: they move the cursor to he next or previous value, if it doesn't exists the focus on the input blurs.
+2. Return and Tab keys aren't blocked by the directive but they have no behaviours.
+3. Letters and other keys aren't allowed
+4. Backspace and Delete erase the value and substitute it with the default sigle value.
