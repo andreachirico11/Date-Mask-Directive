@@ -34,9 +34,8 @@ The type of the input should be `type="text"`
         <input  
         [formControl]="formControl"        
         type="text"          
-        dateMask
-        />
-    </form>
+        dateMask />
+  </form>
 ```
 > If no configuration is provided the default view will be: _yyyy-MM-dd hh:mm:ss_
 
@@ -47,7 +46,7 @@ The type of the input should be `type="text"`
 ## Showcase App
 <img width="400" align="right" alt="application" src="https://user-images.githubusercontent.com/57347299/89783541-64cb5780-db17-11ea-8003-3687a7f7f717.png">
 The repository includes an app to mimic the directive connected to a Angular Form Control input and test in real time all possible formats.
-To use it install the dependencies with `npm install` and launch it with `ng serve`
+To use it install the dependencies with npm install and launch it with ng serve .
 
 &nbsp;  
 &nbsp;  
@@ -78,11 +77,11 @@ import { MaskConfigOptions, Separators, ArrowBehaviours } from "./mask-directive
 ```
 > To use the mask's configuration import the content of the  `mask-options.ts` file and configure your own object of type MaskConfigOptions  and then inject it in the directive.  
 ```
-        <input
-          type="text"
-          dateMask
-          [maskOptions]="maskConfigOptions"
-        />
+<input
+    type="text"
+    dateMask
+    [maskOptions]="maskConfigOptions" 
+/>
 ```
  
  1. **`MaskConfigOptions`** : `type` which contains all the possible configurations
