@@ -1,7 +1,8 @@
 # Date Mask Directive
 ![](https://img.shields.io/badge/Angular%20CLI-9.0.5-red) ![](https://img.shields.io/badge/Node-14.5.0-green) 
 > #### Simple directive to simulate the html `type="date"` input tag with a custom configuration.
-![cover](./github_img/img1.png)
+<!-- ![cover](./github_img/img1.png) -->
+![cover](https://user-images.githubusercontent.com/57347299/89783396-246bd980-db17-11ea-9008-f9ea5e18a510.png)
 
 ## Table of contents
 * [Installation](#installation-and-basic-usage)
@@ -44,7 +45,7 @@ The type of the input should be `type="text"`
 &nbsp;  
 
 ## Showcase App
-<img width="400" align="right" src="./github_img/img2.png">
+<img width="400" align="right" alt="application" src="https://user-images.githubusercontent.com/57347299/89783541-64cb5780-db17-11ea-8003-3687a7f7f717.png">
 The repository includes an app to mimic the directive connected to a Angular Form Control input and test in real time all possible formats.
 To use it install the dependencies with `npm install` and launch it with `ng serve`
 
