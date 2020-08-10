@@ -1,1 +1,149 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+    letter-spacing: 0.08rem;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    background-color: #fbfdfd;
+  }
+  
+  button {
+    background-color: #00a5a5;
+    color: #fbfdfd;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease-out;
+  }
+  
+  button:focus {
+    outline: none;
+    background-color: #009494;
+  }
+  
+  button:hover {
+    background-color: #009494;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+  
+  select {
+    display: inline-block;
+    font-size: 18px;
+    padding: 0.2rem 0.8rem;
+    border-top: 2px solid transparent;
+    border-left: 2px solid transparent;
+    border-bottom: 2px solid #003de5;
+    border-right: 2px solid #003de5;
+    border-bottom-right-radius: 5px;
+    -webkit-appearance: none;
+    transition: border 0.1s ease-out;
+  }
+  
+  select:focus {
+    outline: none;
+  }
+  
+  select:hover {
+    border: 2px solid #003de5;
+    border-top-left-radius: 5px;
+  }
+  
+  .container {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    height: 100vh;
+    width: 100vw;
+  }
+  
+  .row {
+    justify-self: center;
+    align-self: center;
+  }
+  
+  #mainInput {
+    font-size: xxx-large;
+    text-align: center;
+    padding: 1rem 2rem;
+    background-color: #fbfdfd;
+    border: none;
+    border-bottom: 3px solid #aa3562;
+  }
+  
+  #mainInput:focus {
+    outline: none;
+  }
+  
+  .row-bottom {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    justify-self: center;
+    align-items: center;
+  }
+  
+  .row-bottom form {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .up_down_margin {
+    margin: 0.6rem 0;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .up_down_margin p {
+    margin: 0.3rem 0;
+  }
+  
+  .defaults {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+  }
+  
+  .defaults select {
+    border-bottom: 2px solid #00a5a5;
+    border-right: 2px solid #00a5a5;
+  }
+  
+  .defaults select:hover {
+    border: 2px solid #00a5a5;
+  }
+  
+  .defaults button {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 1rem;
+    padding: 0.5rem 2rem;
+  }
+  
+  .format-button {
+    background-color: #e57e00;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 0.5rem;
+    text-transform: uppercase;
+    width: 80%;
+    height: 30%;
+  }
+  
+  .format-button:hover {
+    background-color: #cc7000;
+  }
+  
+  .format-button:focus {
+    background-color: #e57e00;
+  }
+  

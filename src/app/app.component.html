@@ -19,8 +19,8 @@
       </ng-template>
     </form>
   </div>
-  <div class="row" id="controls">
-    <form action="">
+  <div class="row row-bottom" id="controls">
+    <form>
       <div class="up_down_margin">
         <p>Date Format</p>
         <select
@@ -81,6 +81,7 @@
     </form>
     <div class="defaults">
       <label>
+        Arrows Behaviour: 
         <select [(ngModel)]="arrowBehaviour" required name="arrowBehaviour">
           <option *ngFor="let arrowBehaviour of arrowBehaviours" [value]="arrowBehaviour">{{
             arrowBehaviour.replace(regExp,' ')
@@ -94,6 +95,6 @@
         <input type="checkbox" [(ngModel)]="noInitialValue"/>
       </label>
     </div>
-    <button (click)="format()">Format !!!</button>
+    <button class="format-button" (click)="format()">Format !!!</button>
   </div>
 </div>
