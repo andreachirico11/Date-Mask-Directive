@@ -29,7 +29,7 @@
 `declarations: [AppComponent, MaskDirective]`
 3. Call it in the `<input/>` tag where is necessary  
 The type of the input should be `type="text"`
- ```
+ ```html
   <form>
         <input  
         [formControl]="formControl"        
@@ -72,11 +72,11 @@ It also applies a validation on the new value; if the validation is negative the
 &nbsp;  
 
 ## Configurations
-```
+```javascript
 import { MaskConfigOptions, Separators, ArrowBehaviours } from "./mask-directive/mask-options";
 ```
 > To use the mask's configuration import the content of the  `mask-options.ts` file and configure your own object of type MaskConfigOptions  and then inject it in the directive.  
-```
+```html
 <input
     type="text"
     dateMask
@@ -92,7 +92,7 @@ import { MaskConfigOptions, Separators, ArrowBehaviours } from "./mask-directive
 &nbsp;  
 ### Date Configuration
 To configure the date only style visualization provide a string which contains **all** the date sigle write in the desired order whitout separations: _dd_, _MM_, _yy_.
-```
+```javascript
 public myMaskConfigOptions: MaskConfigOptions = {
     dateConfiguration: 'MMddyy'
 };
@@ -102,7 +102,7 @@ public myMaskConfigOptions: MaskConfigOptions = {
 To configure the time only visualization provide a string which contains **at least hours and minutes** sigles: _hh_, _mm_, _ss_.  
 The seconds sigle it's optional; use it if you want to show seconds   
 
-```
+```javascript
 public myMaskConfigOptions: MaskConfigOptions = {
     timeConfiguration: 'hhmm'
 };
@@ -110,7 +110,7 @@ public myMaskConfigOptions: MaskConfigOptions = {
 
 ### Date-Time Configuration
 To configure the date-time full visualization provide **both** date and time configurations.
-```
+```javascript
 public myMaskConfigOptions: MaskConfigOptions = {
     dateConfiguration: 'MMyydd',
     timeConfiguration: 'ssmmhh'
@@ -121,7 +121,7 @@ public myMaskConfigOptions: MaskConfigOptions = {
 MaskOptions type contains 3 properties to configure the date, the time  and the date-time separators.  
 Use the enum `Separators` to assign the desired value.  
 Each of these options has a default value: `dash` for date, `dot` for time, `space` for date-time.
-```
+```javascript
 public myMaskConfigOptions: MaskConfigOptions = {
     dateConfiguration: 'MMyydd',
     timeConfiguration: 'ssmmhh',
@@ -138,7 +138,7 @@ public myMaskConfigOptions: MaskConfigOptions = {
 ## Additional Settings
 ### Arrows Behaviour
 The `ArrowBehaviours` enum contains 3 possible actions for up/down arrow keys.
-```
+```javascript
     enum ArrowBehaviours {
     circular_without_position,
     circular_with_position_and_control,
@@ -158,7 +158,7 @@ public myMaskConfigOptions: MaskConfigOptions = {
 
 ### First Value Behaviour
 If it's present in the mask configuration in case of null or empty initial value it replace it with the actual date **only after the first action**
-```
+```javascript
    myMaskConfigOptions: MaskConfigOptions = {
        ifNoEntryUseActualDate: true
        // etc
@@ -166,7 +166,7 @@ If it's present in the mask configuration in case of null or empty initial value
 ```
 ### Min Max year
 They set the maximum and minimum value for years, the default values are 1970 and 2050.
-```
+```javascript
  myMaskConfigOptions: MaskConfigOptions = {
     maxYear: 2000,
     minYear: 1990,
