@@ -1,4 +1,5 @@
-# Date Mask Directive
+# [Date Mask Directive](https://zen-haibt-e52990.netlify.app)
+
 ![](https://img.shields.io/badge/Angular%20CLI-9.0.5-red) ![](https://img.shields.io/badge/Node-14.5.0-green) [![Netlify Status](https://api.netlify.com/api/v1/badges/370a8bc9-4692-4853-840b-5d804e22a5f7/deploy-status)](https://app.netlify.com/sites/zen-haibt-e52990/deploys)
 > #### Simple directive to simulate the html `type="date"` input tag with a custom configuration.
 <!-- ![cover](./github_img/img1.png) -->
@@ -6,18 +7,18 @@
 
 ## Table of contents
 * [Installation](#installation-and-basic-usage)
-* [Showcase App](#Showcase-App)
+* [Showcase App](#showcase-app)
 * [Description](#description)
 * [Configurations](#configurations)
     * [Date Configuration](#date-configuration)
     * [Time Configuration](#time-configuration)
     * [Date-Time Configuration](#date-time-configuration)
     * [Separators](#separators)
-* [Additional Settings](#Additional-Settings)
-    * [Arrows Behaviour](#Arrows-Behaviour)
-    * [First Value Behaviour](#First-Value-Behaviour)
-    * [Min Max year](#Min-Max-year)
-* [More](#More)
+* [Additional Settings](#additional-settings)
+    * [Arrows Behaviour](#arrows-behaviour)
+    * [First Value Behaviour](#first-value-behaviour)
+    * [Min Max year](#min-max-year)
+* [More](#more)
 
 
 &nbsp;  
