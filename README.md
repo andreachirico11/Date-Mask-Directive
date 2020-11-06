@@ -1,5 +1,5 @@
 # Date Mask Directive
-![](https://img.shields.io/badge/Angular%20CLI-9.0.5-red) ![](https://img.shields.io/badge/Node-14.5.0-green) 
+![](https://img.shields.io/badge/Angular%20CLI-9.0.5-red) ![](https://img.shields.io/badge/Node-14.5.0-green) [![Netlify Status](https://api.netlify.com/api/v1/badges/370a8bc9-4692-4853-840b-5d804e22a5f7/deploy-status)](https://app.netlify.com/sites/zen-haibt-e52990/deploys)
 > #### Simple directive to simulate the html `type="date"` input tag with a custom configuration.
 <!-- ![cover](./github_img/img1.png) -->
 ![cover](https://user-images.githubusercontent.com/57347299/89783396-246bd980-db17-11ea-9008-f9ea5e18a510.png)
