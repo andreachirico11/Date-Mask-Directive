@@ -28,7 +28,6 @@
           [(ngModel)]="dateSelect[i]"
           required
           [name]="'dateSelect' + i"
-          
         >
           <option value="dd">Day</option>
           <option value="MM">Month</option>
@@ -39,7 +38,7 @@
       <div class="up_down_margin">
         <p>Time Format</p>
         <select
-          *ngFor="let i of [0,1,2]"
+          *ngFor="let i of [0, 1, 2]"
           [(ngModel)]="timeSelect[i]"
           required
           [name]="'timeSelect' + i"
@@ -53,17 +52,17 @@
       <label class="up_down_margin">
         Date Separator
         <select [(ngModel)]="dateSeparator" required name="dateSeparator">
-          <option *ngFor="let separator of separators" [value]="separator">{{
-            separator
-          }}</option>
+          <option *ngFor="let separator of separators" [value]="separator">
+            {{ separator }}
+          </option>
         </select>
       </label>
       <label class="up_down_margin">
         Time Separator
         <select [(ngModel)]="timeSeparator" required name="timeSeparator">
-          <option *ngFor="let separator of separators" [value]="separator">{{
-            separator
-          }}</option>
+          <option *ngFor="let separator of separators" [value]="separator">
+            {{ separator }}
+          </option>
         </select>
       </label>
       <label class="up_down_margin">
@@ -73,26 +72,30 @@
           required
           name="dateTimeSeparator"
         >
-          <option *ngFor="let separator of separators" [value]="separator">{{
-            separator
-          }}</option>
+          <option *ngFor="let separator of separators" [value]="separator">
+            {{ separator }}
+          </option>
         </select>
       </label>
     </form>
     <div class="defaults">
       <label>
-        Arrows Behaviour: 
+        Arrows Behaviour:
         <select [(ngModel)]="arrowBehaviour" required name="arrowBehaviour">
-          <option *ngFor="let arrowBehaviour of arrowBehaviours" [value]="arrowBehaviour">{{
-            arrowBehaviour.replace(regExp,' ')
-          }}</option>
+          <option
+            *ngFor="let arrowBehaviour of arrowBehaviours"
+            [value]="arrowBehaviour"
+          >
+            {{ arrowBehaviour.replace(regExp, " ") }}
+          </option>
         </select>
       </label>
       <button (click)="defaultDateFormat()">day-month-year</button>
       <button (click)="defaultTimeFormat()">hour:minute:seconds</button>
       <button (click)="defaultDateTimeFormat()">dd-MM-yyyy hh:mm:ss</button>
-      <label>No Initial Value
-        <input type="checkbox" [(ngModel)]="noInitialValue"/>
+      <label
+        >No Initial Value
+        <input type="checkbox" [(ngModel)]="noInitialValue" />
       </label>
     </div>
     <button class="format-button" (click)="format()">Format !!!</button>

@@ -1,30 +1,70 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "mask": {
+    "ng-date-mask": {
+      "projectType": "library",
+      "root": "projects/ng-date-mask",
+      "sourceRoot": "projects/ng-date-mask/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ng-date-mask/tsconfig.lib.json",
+            "project": "projects/ng-date-mask/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-date-mask/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-date-mask/src/test.ts",
+            "tsConfig": "projects/ng-date-mask/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-date-mask/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-date-mask/tsconfig.lib.json",
+              "projects/ng-date-mask/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ng-date-mask-showcase": {
       "projectType": "application",
       "schematics": {},
-      "root": "",
-      "sourceRoot": "src",
+      "root": "projects/ng-date-mask-showcase",
+      "sourceRoot": "projects/ng-date-mask-showcase/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "outputPath": "dist/ng-date-mask-showcase",
+            "index": "projects/ng-date-mask-showcase/src/index.html",
+            "main": "projects/ng-date-mask-showcase/src/main.ts",
+            "polyfills": "projects/ng-date-mask-showcase/src/polyfills.ts",
+            "tsConfig": "projects/ng-date-mask-showcase/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "projects/ng-date-mask-showcase/src/favicon.ico",
+              "projects/ng-date-mask-showcase/src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "projects/ng-date-mask-showcase/src/styles.css"
             ],
             "scripts": []
           },
@@ -32,14 +72,13 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "projects/ng-date-mask-showcase/src/environments/environment.ts",
+                  "with": "projects/ng-date-mask-showcase/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -62,33 +101,33 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mask:build"
+            "browserTarget": "ng-date-mask-showcase:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "mask:build:production"
+              "browserTarget": "ng-date-mask-showcase:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mask:build"
+            "browserTarget": "ng-date-mask-showcase:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
+            "main": "projects/ng-date-mask-showcase/src/test.ts",
+            "polyfills": "projects/ng-date-mask-showcase/src/polyfills.ts",
+            "tsConfig": "projects/ng-date-mask-showcase/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-date-mask-showcase/karma.conf.js",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "projects/ng-date-mask-showcase/src/favicon.ico",
+              "projects/ng-date-mask-showcase/src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "projects/ng-date-mask-showcase/src/styles.css"
             ],
             "scripts": []
           }
@@ -97,9 +136,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
+              "projects/ng-date-mask-showcase/tsconfig.app.json",
+              "projects/ng-date-mask-showcase/tsconfig.spec.json",
+              "projects/ng-date-mask-showcase/e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -109,16 +148,17 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "mask:serve"
+            "protractorConfig": "projects/ng-date-mask-showcase/e2e/protractor.conf.js",
+            "devServerTarget": "ng-date-mask-showcase:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "mask:serve:production"
+              "devServerTarget": "ng-date-mask-showcase:serve:production"
             }
           }
         }
       }
-    }},
-  "defaultProject": "mask"
+    }
+  },
+  "defaultProject": "ng-date-mask"
 }

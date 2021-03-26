@@ -3,11 +3,11 @@ import { NgModule } from "@angular/core";
 
 import { AppComponent } from "./app.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MaskDirective } from './mask-directive/mask.directive';
+import { NgDateMaskModule } from "ng-date-mask";
 
 @NgModule({
-  declarations: [AppComponent, MaskDirective],
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule],
+  declarations: [AppComponent],
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule, NgDateMaskModule],
   providers: [],
   bootstrap: [AppComponent],
 })

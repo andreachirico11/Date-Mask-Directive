@@ -1,8 +1,5 @@
-import {
-  Component,
-  OnInit,
-} from "@angular/core";
-import { MaskConfigOptions, Separators, ArrowBehaviours } from "./mask-directive/mask-options";
+import { Component, OnInit } from "@angular/core";
+import { Separators, MaskConfigOptions, ArrowBehaviours } from "ng-date-mask";
 import { FormControl } from "@angular/forms";
 
 @Component({
@@ -24,23 +21,22 @@ export class AppComponent implements OnInit {
   defaultValue = "2019-10-11T23:59:05";
   public dateSelect: string[] = [];
   public timeSelect: string[] = [];
-  public regExp = new RegExp('_', 'g');
+  public regExp = new RegExp("_", "g");
   public noInitialValue = false;
-
 
   ngOnInit() {
     this.separators = [
       ...Object.keys(Separators).map((key) => Separators[key]),
     ];
     this.arrowBehaviours = [
-      ...Object.keys(ArrowBehaviours).map((key) => ArrowBehaviours[key])
-        .filter(b => b.length > 1),
+      ...Object.keys(ArrowBehaviours)
+        .map((key) => ArrowBehaviours[key])
+        .filter((b) => b.length > 1),
     ];
-    this.formControl = new FormControl(this.defaultValue);   
+    this.formControl = new FormControl(this.defaultValue);
   }
-  
-  
-  format(): void {   
+
+  format(): void {
     this.usingTheDirective = false;
     this.maskConfigOptions = {};
     const date = this.createDate();
@@ -51,12 +47,12 @@ export class AppComponent implements OnInit {
     if (time) {
       this.maskConfigOptions.timeConfiguration = time;
     }
-    if(!date && time) {
+    if (!date && time) {
       this.formControl = new FormControl(this.defaultValue.substring(11));
     } else {
       this.formControl = new FormControl(this.defaultValue);
     }
-    if(this.noInitialValue === true) {
+    if (this.noInitialValue === true) {
       this.formControl = new FormControl(null);
       this.maskConfigOptions.ifNoEntryUseActualDate = true;
     }
@@ -69,10 +65,11 @@ export class AppComponent implements OnInit {
     if (this.dateTimeSeparator) {
       this.maskConfigOptions.dateTimeSeparator = this.dateTimeSeparator;
     }
-    if(this.arrowBehaviour) {
-      this.maskConfigOptions.arrowBehaviours = ArrowBehaviours[this.arrowBehaviour];
+    if (this.arrowBehaviour) {
+      this.maskConfigOptions.arrowBehaviours =
+        ArrowBehaviours[this.arrowBehaviour];
     }
-    console.log('Mask Configuration: ', this.maskConfigOptions);    
+    console.log("Mask Configuration: ", this.maskConfigOptions);
     setTimeout(() => {
       this.usingTheDirective = true;
     }, 100);
@@ -82,7 +79,7 @@ export class AppComponent implements OnInit {
     if (this.dateSelect.length < 3) {
       return null;
     }
-    if(this.dateSelect.findIndex((sigle) => sigle === "xx")!== -1) {
+    if (this.dateSelect.findIndex((sigle) => sigle === "xx") !== -1) {
       return null;
     }
     return this.findMoreOccurenciesForAllElementInArray([...this.dateSelect])
@@ -92,7 +89,7 @@ export class AppComponent implements OnInit {
 
   createTime(): string {
     const filteredTime = this.timeSelect.filter((sigle) => sigle !== "xx");
-    if(filteredTime.length < 2) {
+    if (filteredTime.length < 2) {
       return null;
     }
     return this.findMoreOccurenciesForAllElementInArray([...filteredTime])
@@ -123,21 +120,20 @@ export class AppComponent implements OnInit {
   }
 
   defaultDateFormat() {
-      this.dateSelect = ['dd', 'MM', 'yy'];
-      this.timeSelect = [];
-      this.format();
-    }
-    
-    defaultTimeFormat() {
-      this.dateSelect = [];
-      this.timeSelect = ['hh', 'mm', 'ss'];
-      this.format();
-    }
-    
-    defaultDateTimeFormat() {
-      this.dateSelect = ['dd', 'MM', 'yy'];
-      this.timeSelect = ['hh', 'mm', 'ss'];
-      this.format();
+    this.dateSelect = ["dd", "MM", "yy"];
+    this.timeSelect = [];
+    this.format();
   }
 
+  defaultTimeFormat() {
+    this.dateSelect = [];
+    this.timeSelect = ["hh", "mm", "ss"];
+    this.format();
+  }
+
+  defaultDateTimeFormat() {
+    this.dateSelect = ["dd", "MM", "yy"];
+    this.timeSelect = ["hh", "mm", "ss"];
+    this.format();
+  }
 }
